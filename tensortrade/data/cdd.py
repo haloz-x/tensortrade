@@ -108,6 +108,7 @@ class CryptoDataDownload:
         if timeframe.endswith("h"):
             timeframe = timeframe[:-1] + "hr"
         filename = "{}_{}{}_{}.csv".format("gemini", quote_symbol, base_symbol, timeframe)
+        print(self.url + filename)
         df = pd.read_csv(self.url + filename, skiprows=1)
         df = df[::-1]
         df = df.drop(["Symbol", "Unix Timestamp"], axis=1)
