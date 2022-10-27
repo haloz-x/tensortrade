@@ -20,7 +20,7 @@ from setuptools import find_packages, setup
 
 
 if sys.version_info.major != 3:
-    raise NotImplementedError("TensorTrade is only compatible with Python 3.")
+    raise NotImplementedError("仅支持 Python 3.7 以上")
 
 
 tensortrade_directory = os.path.abspath(os.path.dirname(__file__))
