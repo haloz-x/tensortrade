@@ -11,3 +11,5 @@ ipywidgets>=7.0.0  # Required for rendering
 deprecated>=1.2.13
 ray>=0.8.7
 symfit
+ray>=0.8.7
+symfit
