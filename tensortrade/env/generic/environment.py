@@ -131,6 +131,7 @@ class TradingEnv(gym.Env, TimeIndexed):
         dict
             The information gathered after completing the step.
         """
+        # 对环境发起动作，买或卖
         self.action_scheme.perform(self, action)
 
         obs = self.observer.observe(self)

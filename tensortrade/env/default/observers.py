@@ -91,6 +91,8 @@ class ObservationHistory(object):
     window_size : int
         The amount of observations to keep stored before discarding them.
 
+    23/3/3理解:用于保存观察历史数据， 最多只保留window_size记录用于观测
+
     Attributes
     ----------
     window_size : int
@@ -238,6 +240,7 @@ class TensorTradeObserver(Observer):
 
     def warmup(self) -> None:
         """Warms up the data feed.
+        23/3/3理解：预加载数据到观测历史，代理一开始从环境中观察时有足够的数据
         """
         if self.min_periods is not None:
             for _ in range(self.min_periods):
@@ -250,6 +253,9 @@ class TensorTradeObserver(Observer):
 
         As a consequence of observing the `env`, a new observation is generated
         from the `feed` and stored in the observation history.
+
+        23/3/3:理解，返回观察数据，通过window_size控制观察历史数据条数
+
 
         Returns
         -------

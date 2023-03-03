@@ -109,7 +109,6 @@ class PBR(TensorTradeRewardScheme):
         self.feed.reset()
 
 
-
 class PositionChangeChart(Renderer):
 
     def __init__(self, color: str = "orange"):
