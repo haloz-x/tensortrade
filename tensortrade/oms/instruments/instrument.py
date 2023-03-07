@@ -159,3 +159,8 @@ AAPL = Instrument('AAPL', 2, 'Apple stock')
 MSFT = Instrument('MSFT', 2, 'Microsoft stock')
 TSLA = Instrument('TSLA', 2, 'Tesla stock')
 AMZN = Instrument('AMZN', 2, 'Amazon stock')
+
+#Swap
+BTC_SWAP = Instrument('BTC_SWAP', 8, 'Bitcoin Swap')
+ETH_SWAP = Instrument('ETH_SWAP', 8, 'Ethereum Swap')
+

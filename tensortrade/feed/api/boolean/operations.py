@@ -6,7 +6,7 @@ from tensortrade.feed.api.boolean import Boolean
 @Boolean.register(["invert"])
 def invert(s: "Stream[bool]") -> "Stream[bool]":
     """Inverts the truth value of the given stream.
-
+        对bool求非值
     Parameters
     ----------
     s: `Stream[bool]`

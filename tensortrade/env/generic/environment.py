@@ -82,12 +82,15 @@ class TradingEnv(gym.Env, TimeIndexed):
         self.random_start_pct = random_start_pct
 
         # Register the environment in Gym and fetch spec
+        # 23/3/6 添加entry_point, 还不清除entry_point的作用
         gym.envs.register(
             id='TensorTrade-v0',
+            entry_point='gym.envs.classic_control:TensorTrade',
             max_episode_steps=max_episode_steps,
         )
         self.spec = gym.spec(env_id='TensorTrade-v0')
 
+        # 同步组件时钟
         for c in self.components.values():
             c.clock = self.clock
 
@@ -101,7 +104,9 @@ class TradingEnv(gym.Env, TimeIndexed):
 
     @property
     def components(self) -> 'Dict[str, Component]':
-        """The components of the environment. (`Dict[str,Component]`, read-only)"""
+        """The components of the environment. (`Dict[str,Component]`, read-only)
+            返回所有环境组件
+        """
         return {
             "action_scheme": self.action_scheme,
             "reward_scheme": self.reward_scheme,
@@ -113,7 +118,7 @@ class TradingEnv(gym.Env, TimeIndexed):
 
     def step(self, action: Any) -> 'Tuple[np.array, float, bool, dict]':
         """Makes one step through the environment.
-
+        在环境中执行一步
         Parameters
         ----------
         action : Any
@@ -134,18 +139,23 @@ class TradingEnv(gym.Env, TimeIndexed):
         # 对环境发起动作，买或卖
         self.action_scheme.perform(self, action)
 
+        # 获得观察数据
         obs = self.observer.observe(self)
+
+        # 奖励
         reward = self.reward_scheme.reward(self)
+
         done = self.stopper.stop(self)
         info = self.informer.info(self)
 
+        #时钟计数
         self.clock.increment()
 
         return obs, reward, done, info
 
     def reset(self) -> 'np.array':
         """Resets the environment.
-
+        环境数据从新开始
         Returns
         -------
         obs : `np.array`
@@ -160,6 +170,7 @@ class TradingEnv(gym.Env, TimeIndexed):
         self.episode_id = str(uuid.uuid4())
         self.clock.reset()
 
+        # 关联的每个组件调用reset方法， 重置状态
         for c in self.components.values():
             if hasattr(c, "reset"):
                 if isinstance(c, Observer):
@@ -167,6 +178,7 @@ class TradingEnv(gym.Env, TimeIndexed):
                 else:
                     c.reset()
 
+        # 重置后，获得预加载环境数据(目的是让代理有足够的观察数据)
         obs = self.observer.observe(self)
 
         self.clock.increment()

@@ -103,6 +103,7 @@ class NameSpace(Named):
 class Stream(Generic[T], Named, Observable):
     """A class responsible for creating the inputs necessary to work in a
     `DataFeed`.
+    可用于观察的数据流
 
     Parameters
     ----------

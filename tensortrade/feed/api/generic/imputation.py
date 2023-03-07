@@ -8,7 +8,9 @@ from tensortrade.feed.core.base import Stream, T
 
 
 class ForwardFill(Stream[T]):
-    """A stream operator that computes the forward fill imputation of a stream."""
+    """A stream operator that computes the forward fill imputation of a stream.
+     用前值填充缺失值
+    """
 
     generic_name = "ffill"
 
@@ -28,6 +30,7 @@ class ForwardFill(Stream[T]):
 
 class FillNa(Stream[T]):
     """A stream operator that computes the padded imputation of a stream.
+    用指定的数填充na值
 
     Parameters
     ----------
